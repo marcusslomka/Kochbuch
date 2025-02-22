@@ -7,6 +7,6 @@ public enum CategorieIngredients {
     Fruits,
     Oil,
     Flour,
-    Fluid
-
+    Fluid,
+    Eggs
 }

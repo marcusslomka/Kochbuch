@@ -1,11 +1,11 @@
 package com.example.Kochbuch.entities;
 
 import com.example.Kochbuch.enums.CategorieIngredients;
-import com.example.Kochbuch.services.RecipeService;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name="ingredients")
 public class Ingredient {
 
     @Id
@@ -14,7 +14,7 @@ public class Ingredient {
     @NotBlank
     @Column(unique = true)
     private String name;
-    private CategorieIngredients categorie;
+    private CategorieIngredients category;
 
 
     public @NotBlank String getName() {
@@ -25,11 +25,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public CategorieIngredients getCategorie() {
-        return categorie;
+    public CategorieIngredients getCategory() {
+        return category;
     }
 
-    public void setCategorie( CategorieIngredients categorie) {
-        this.categorie = categorie;
+    public void setCategory(CategorieIngredients category) {
+        this.category = category;
     }
 }

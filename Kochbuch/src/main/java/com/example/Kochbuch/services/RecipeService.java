@@ -6,11 +6,9 @@ import com.example.Kochbuch.entities.Recipe;
 import com.example.Kochbuch.entities.RecipeIngredients;
 import com.example.Kochbuch.repositories.IngredientRepository;
 import com.example.Kochbuch.repositories.RecipeRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -33,7 +31,7 @@ public class RecipeService {
                             .orElseGet(()->{
                                 //Neue Zutat anlegen, falls noch nciht vorhanden
                                 Ingredient newIngredient = new Ingredient();
-                                newIngredient.setCategorie(RecipeIngredientsDTO.categorie());
+                                newIngredient.setCategory(RecipeIngredientsDTO.categorie());
                                 newIngredient.setName(RecipeIngredientsDTO.name());
                                 ingredientRepository.save(newIngredient);
                                 return newIngredient;
