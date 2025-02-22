@@ -32,11 +32,5 @@ public class DbConfig {
                         );
                         """
         );
-        jdbcTemplate.update(
-                """
-                INSERT INTO recipes
-                VALUES (?,?,?)
-                """, "testid2", "name","description" );
-        System.out.println("hamlo");
     }
 }

@@ -24,10 +24,10 @@ public class RecipeController {
 //    public ResponseEntity<RespFillRecipeDTO> fillCreatedRecipe(@PathVariable long recipe_id, @RequestBody ReqFillRecipeDTO dto){
 //        return ResponseEntity.status(HttpStatus.OK).body(recipeService.fillCreatedRecipe(recipe_id,dto));
 //    }
-    @GetMapping("/{recipe_id}")
-    public ResponseEntity<RespGetRecipeByIdDTO> getRecipeById(@PathVariable long recipe_id){
-       return ResponseEntity.status(HttpStatus.OK).body(recipeService.getRecipeByID(recipe_id));
-    }
+  //  @GetMapping("/{recipe_id}")
+   // public ResponseEntity<RespGetRecipeByIdDTO> getRecipeById(@PathVariable long recipe_id){
+       //return ResponseEntity.status(HttpStatus.OK).body(recipeService.getRecipeByID(recipe_id));
+   // }
 //    @DeleteMapping("/recipe_id")
 //    public void deleteRecipeById(@PathVariable long recipe_id){
 //        ResponseEntity.ok(recipeService.deleteRecipeById(recipe_id));

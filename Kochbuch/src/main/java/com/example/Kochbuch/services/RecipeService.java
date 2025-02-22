@@ -1,23 +1,18 @@
 package com.example.Kochbuch.services;
 
 import com.example.Kochbuch.dtos.*;
-import com.example.Kochbuch.entities.Ingredient;
 import com.example.Kochbuch.entities.Recipe;
-import com.example.Kochbuch.entities.RecipeIngredients;
-import com.example.Kochbuch.repositories.IngredientRepository;
-import com.example.Kochbuch.repositories.RecipeRepository;
+import com.example.Kochbuch.repositories.RecipeDAO;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RecipeService {
-    RecipeRepository recipeRepository;
-    IngredientRepository ingredientRepository;
+    RecipeDAO recipeDAO;
 
-    public RecipeService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository) {
-        this.recipeRepository = recipeRepository;
-        this.ingredientRepository = ingredientRepository;
+    public RecipeService(RecipeDAO recipeDAO) {
+        this.recipeDAO = recipeDAO;
+
     }
 
     public RespCreateNewRecipeDTO createNewRecipe(ReqCreateNewRecipeDTO dto){
@@ -25,9 +20,9 @@ public class RecipeService {
         recipe.setTitle(dto.title());
         recipe.setDescription(dto.description());
         //Zutaten durchgehen und zuordnen
-        List<RecipeIngredients> recipeIngredients = dto.ingredients().stream()
+        /* List<RecipeIngredients> recipeIngredients = dto.ingredients().stream()
                 .map(RecipeIngredientsDTO ->{
-                    Ingredient ingredient = ingredientRepository.findByName(RecipeIngredientsDTO.name())
+                    Ingredient ingredient = Optional.ofNullable(null)
                             .orElseGet(()->{
                                 //Neue Zutat anlegen, falls noch nciht vorhanden
                                 Ingredient newIngredient = new Ingredient();
@@ -44,14 +39,14 @@ public class RecipeService {
                     recipeIngredient.setRecipe(recipe);
                     return recipeIngredient;
                 }).toList();
-
+        */
         //Liste an Rezeptzutaten dem Rezept noch zuornden
-        recipe.setIngredients(recipeIngredients);
-        this.recipeRepository.save(recipe);
-        return new RespCreateNewRecipeDTO(recipe.getId(),recipe.getTitle());
+        recipe.setIngredients(List.of());
+        this.recipeDAO.save(recipe);
+        return new RespCreateNewRecipeDTO(recipe.getTitle());
     }
 
-    public RespGetRecipeByIdDTO getRecipeByID(long id){
+ /*   public RespGetRecipeByIdDTO getRecipeByID(long id){
         Optional<Recipe> toGetRecipe = recipeRepository.findById(id);
         if (toGetRecipe.isEmpty()){
             throw new IllegalArgumentException("No Recipe with this ID found");
@@ -64,7 +59,7 @@ public class RecipeService {
                     toGetRecipe.get().getIngredients()) ;
         }
     }
-
+*/
 //    public RespFillRecipeDTO updateRecipe(long id, ReqFillRecipeDTO dto){
 //        Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
 //        if (optionalRecipe.isEmpty())
@@ -78,11 +73,13 @@ public class RecipeService {
 //        }
 //
 //    }
-    public void deleteRecipeById(long id){
+  /*  public void deleteRecipeById(long id){
         if (recipeRepository.findById(id).isEmpty())
             throw new IllegalArgumentException("Recipe with this ID doesnt exists");
         else{
             recipeRepository.deleteById(id);
         }
     }
+    */
+
 }

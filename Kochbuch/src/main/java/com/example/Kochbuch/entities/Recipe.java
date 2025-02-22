@@ -1,6 +1,6 @@
 package com.example.Kochbuch.entities;
 
-import jakarta.persistence.*;
+
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
@@ -8,15 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Entity
+
 public class Recipe {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
+    private String id;
     private String title;
     private String description;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+
     private List<RecipeIngredients> ingredients = new ArrayList<>();
 
     public List<RecipeIngredients> getIngredients() {
@@ -27,7 +26,7 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

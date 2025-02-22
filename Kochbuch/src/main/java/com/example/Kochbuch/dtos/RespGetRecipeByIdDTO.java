@@ -8,7 +8,7 @@ import java.util.List;
 
 public record RespGetRecipeByIdDTO(
         @NotNull
-        long id,
+        String id,
         @NotBlank
         String title,
         String description,

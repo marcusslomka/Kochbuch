@@ -178,3 +178,6 @@ select i1_0.id,i1_0.category,i1_0.name from ingredients i1_0 where i1_0.name=? [
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-02-22 17:12:51.104992+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RECIPE" not found; SQL statement:
+insert into recipe (description,title,id) values (?,?,default) [42102-224]

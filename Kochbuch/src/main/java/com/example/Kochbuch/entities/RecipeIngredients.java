@@ -2,26 +2,20 @@ package com.example.Kochbuch.entities;
 
 import com.example.Kochbuch.enums.QuantityUnit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-@Entity
+
 public class RecipeIngredients {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "recipe_id")
-    @JsonIgnore
+
     //um infinity Loop zu umgehen!!
     private Recipe recipe;
 
-    @ManyToOne
-    @JoinColumn(name = "ingredient_id")
+
     private Ingredient ingredient;
 
     @NotNull
