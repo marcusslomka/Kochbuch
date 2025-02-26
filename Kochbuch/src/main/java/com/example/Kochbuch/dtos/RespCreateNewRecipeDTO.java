@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record RespCreateNewRecipeDTO(
         @NotBlank
-        String title
+        String title,
+        String id
 ){
 }

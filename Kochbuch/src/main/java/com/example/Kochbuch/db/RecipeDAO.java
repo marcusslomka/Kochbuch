@@ -15,7 +15,7 @@ public class RecipeDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Recipe save(Recipe recipe) {
+    public String save(Recipe recipe) {
         String id = recipe.getId();
         if (id == null) {
             id = UUID.randomUUID().toString();
@@ -25,11 +25,18 @@ public class RecipeDAO {
                         INSERT INTO recipes
                         VALUES (?,?,?)
                         """, id, recipe.getTitle(), recipe.getDescription());
-        return recipe;
+        return id;
     }
     public Recipe findById (String id){
         Recipe recipe = jdbcTemplate.queryForObject(
                 " SELECT * FROM RECIPES WHERE ID= ?",new RecipeMapper(),id);
                 return recipe;
     }
+//    public String getLastInsertedId (){
+//        String id = jdbcTemplate.queryForObject(
+//                """
+//                        SELECT LAST_INSERT_ID()
+//                        """,String.class);
+//        return id;
+//    }
 }

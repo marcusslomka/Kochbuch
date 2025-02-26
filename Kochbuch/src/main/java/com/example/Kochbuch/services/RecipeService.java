@@ -43,8 +43,9 @@ public class RecipeService {
         */
         //Liste an Rezeptzutaten dem Rezept noch zuornden
         recipe.setIngredients(List.of());
-        this.recipeDAO.save(recipe);
-        return new RespCreateNewRecipeDTO(recipe.getTitle());
+
+        recipe.setId(this.recipeDAO.save(recipe));
+        return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }
 
     public RespGetRecipeByIdDTO getRecipeByID (String id){
