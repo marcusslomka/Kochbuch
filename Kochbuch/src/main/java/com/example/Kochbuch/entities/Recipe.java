@@ -30,6 +30,10 @@ public class Recipe {
         return id;
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
     public @NotBlank String getTitle() {
         return title;
     }

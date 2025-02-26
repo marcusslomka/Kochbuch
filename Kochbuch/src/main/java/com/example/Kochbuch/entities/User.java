@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class User {
 
-    private long id;
+    private String id;
 
     @NotBlank
     private String email;

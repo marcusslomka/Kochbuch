@@ -2,9 +2,11 @@ package com.example.Kochbuch.services;
 
 import com.example.Kochbuch.dtos.*;
 import com.example.Kochbuch.entities.Recipe;
+import com.example.Kochbuch.repositories.InMemoryRecipeDAO;
 import com.example.Kochbuch.repositories.RecipeDAO;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -46,8 +48,8 @@ public class RecipeService {
         return new RespCreateNewRecipeDTO(recipe.getTitle());
     }
 
- /*   public RespGetRecipeByIdDTO getRecipeByID(long id){
-        Optional<Recipe> toGetRecipe = recipeRepository.findById(id);
+    public RespGetRecipeByIdDTO getRecipeByID (String id){
+        Optional<Recipe> toGetRecipe = Optional.ofNullable(recipeDAO.findById(id));
         if (toGetRecipe.isEmpty()){
             throw new IllegalArgumentException("No Recipe with this ID found");
         }
@@ -59,7 +61,7 @@ public class RecipeService {
                     toGetRecipe.get().getIngredients()) ;
         }
     }
-*/
+
 //    public RespFillRecipeDTO updateRecipe(long id, ReqFillRecipeDTO dto){
 //        Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
 //        if (optionalRecipe.isEmpty())

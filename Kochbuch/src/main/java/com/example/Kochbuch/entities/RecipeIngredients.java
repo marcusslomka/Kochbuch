@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class RecipeIngredients {
 
-    private long id;
+    private String id;
 
 
     //um infinity Loop zu umgehen!!
