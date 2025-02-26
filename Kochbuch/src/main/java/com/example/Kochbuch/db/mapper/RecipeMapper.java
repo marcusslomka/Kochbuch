@@ -1,4 +1,4 @@
-package com.example.Kochbuch.mapper;
+package com.example.Kochbuch.db.mapper;
 
 import com.example.Kochbuch.entities.Recipe;
 

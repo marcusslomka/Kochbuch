@@ -1,11 +1,10 @@
-package com.example.Kochbuch.repositories;
+package com.example.Kochbuch.db;
 
 import com.example.Kochbuch.entities.Recipe;
-import com.example.Kochbuch.mapper.RecipeMapper;
+import com.example.Kochbuch.db.mapper.RecipeMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Component

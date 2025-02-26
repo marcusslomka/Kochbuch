@@ -2,8 +2,7 @@ package com.example.Kochbuch.services;
 
 import com.example.Kochbuch.dtos.*;
 import com.example.Kochbuch.entities.Recipe;
-import com.example.Kochbuch.repositories.InMemoryRecipeDAO;
-import com.example.Kochbuch.repositories.RecipeDAO;
+import com.example.Kochbuch.db.RecipeDAO;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;

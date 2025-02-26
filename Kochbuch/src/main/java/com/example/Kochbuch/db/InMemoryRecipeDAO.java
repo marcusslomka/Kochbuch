@@ -1,7 +1,6 @@
-package com.example.Kochbuch.repositories;
+package com.example.Kochbuch.db;
 
 import com.example.Kochbuch.entities.Recipe;
-import com.example.Kochbuch.mapper.RecipeMapper;
 
 import java.util.HashMap;
 import java.util.Map;

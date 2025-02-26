@@ -1,4 +1,4 @@
-package com.example.Kochbuch.controllers;
+package com.example.Kochbuch.db;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.jdbc.core.JdbcTemplate;
