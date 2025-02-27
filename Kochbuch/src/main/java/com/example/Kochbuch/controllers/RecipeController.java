@@ -20,10 +20,10 @@ public class RecipeController {
     public ResponseEntity<RespCreateNewRecipeDTO> createNewRecipe(@RequestBody @Validated ReqCreateNewRecipeDTO dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.createNewRecipe(dto));
     }
-//    @PutMapping("/{recipe_id}")
-//    public ResponseEntity<RespFillRecipeDTO> fillCreatedRecipe(@PathVariable long recipe_id, @RequestBody ReqFillRecipeDTO dto){
-//        return ResponseEntity.status(HttpStatus.OK).body(recipeService.fillCreatedRecipe(recipe_id,dto));
-//    }
+    @PutMapping("/{recipe_id}")
+    public ResponseEntity<RespUpdateRecipeDTO> fillCreatedRecipe(@PathVariable String recipe_id, @RequestBody ReqUpdateRecipeDTO dto){
+        return ResponseEntity.status(HttpStatus.OK).body(recipeService.updateRecipe(recipe_id,dto));
+    }
     @GetMapping("/{recipe_id}")
     public ResponseEntity<RespGetRecipeByIdDTO> getRecipeById(@PathVariable String recipe_id){
        return ResponseEntity.status(HttpStatus.OK).body(recipeService.getRecipeByID(recipe_id));

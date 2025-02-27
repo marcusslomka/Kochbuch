@@ -62,19 +62,20 @@ public class RecipeService {
         }
     }
 
-//    public RespFillRecipeDTO updateRecipe(long id, ReqFillRecipeDTO dto){
-//        Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
-//        if (optionalRecipe.isEmpty())
-//            throw new IllegalArgumentException("No Recipe with this ID found");
-//        else {
-//            Recipe toFillRecipe = optionalRecipe.get();
-//            toFillRecipe.setDescription(dto.description());
-//            toFillRecipe.setIngredients(dto.ingredients());
-//            this.recipeRepository.save(toFillRecipe);
-//            return new RespFillRecipeDTO(toFillRecipe.getTitle());
-//        }
-//
-//    }
+    public RespUpdateRecipeDTO updateRecipe(String id, ReqUpdateRecipeDTO dto){
+        Optional<Recipe> optionalRecipe = Optional.ofNullable(recipeDAO.findById(id));
+        if (optionalRecipe.isEmpty())
+            throw new IllegalArgumentException("No Recipe with this ID found");
+        else {
+            Recipe toUpdateRecipe = optionalRecipe.get();
+            toUpdateRecipe.setTitle(dto.title());
+            toUpdateRecipe.setDescription(dto.description());
+            toUpdateRecipe.setIngredients(dto.ingredients());
+            this.recipeDAO.update(toUpdateRecipe);
+            return new RespUpdateRecipeDTO(toUpdateRecipe.getTitle(),toUpdateRecipe.getId());
+        }
+
+    }
   /*  public void deleteRecipeById(long id){
         if (recipeRepository.findById(id).isEmpty())
             throw new IllegalArgumentException("Recipe with this ID doesnt exists");

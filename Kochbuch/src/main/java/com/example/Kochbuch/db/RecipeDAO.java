@@ -27,16 +27,18 @@ public class RecipeDAO {
                         """, id, recipe.getTitle(), recipe.getDescription());
         return id;
     }
-    public Recipe findById (String id){
+
+    public Recipe findById(String id) {
         Recipe recipe = jdbcTemplate.queryForObject(
-                " SELECT * FROM RECIPES WHERE ID= ?",new RecipeMapper(),id);
-                return recipe;
+                " SELECT * FROM recipes WHERE ID= ?", new RecipeMapper(), id);
+        return recipe;
     }
-//    public String getLastInsertedId (){
-//        String id = jdbcTemplate.queryForObject(
-//                """
-//                        SELECT LAST_INSERT_ID()
-//                        """,String.class);
-//        return id;
-//    }
+    public void update(Recipe recipe) {
+        jdbcTemplate.update(
+                """
+                        UPDATE recipes
+                        SET title = ?, description = ?
+                        WHERE ID = ?
+                        """,recipe.getTitle(), recipe.getDescription(),recipe.getId());
+    }
 }
