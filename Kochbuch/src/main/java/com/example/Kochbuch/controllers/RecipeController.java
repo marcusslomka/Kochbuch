@@ -34,7 +34,7 @@ public class RecipeController {
             return ResponseEntity.notFound().build();
         else return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.getRecipeByID(recipe_id).get());
     }
-    @DeleteMapping("/recipe_id")
+    @DeleteMapping("/{recipe_id}")
     public ResponseEntity<RespDeleteRecipeDTO> deleteRecipeById(@PathVariable String recipe_id){ //Not working
         if (recipeService.deleteRecipeById(recipe_id) == null)
             return ResponseEntity.notFound().build();
