@@ -4,6 +4,8 @@ import com.example.Kochbuch.dtos.*;
 import com.example.Kochbuch.entities.Recipe;
 import com.example.Kochbuch.db.RecipeDAO;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,18 +50,13 @@ public class RecipeService {
         return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }
 
-    public RespGetRecipeByIdDTO getRecipeByID (String id){
+    public Optional<RespGetRecipeByIdDTO> getRecipeByID (String id){
         Optional<Recipe> toGetRecipe = Optional.ofNullable(recipeDAO.findById(id));
-        if (toGetRecipe.isEmpty()){
-            throw new IllegalArgumentException("No Recipe with this ID found");
-        }
-        else {
-            return new RespGetRecipeByIdDTO(
-                    toGetRecipe.get().getId(),
-                    toGetRecipe.get().getTitle(),
-                    toGetRecipe.get().getDescription(),
-                    toGetRecipe.get().getIngredients()) ;
-        }
+        return toGetRecipe.map(recipe -> new RespGetRecipeByIdDTO(
+                recipe.getId(),
+                recipe.getTitle(),
+                recipe.getDescription(),
+                recipe.getIngredients()));
     }
 
     public RespUpdateRecipeDTO updateRecipe(String id, ReqUpdateRecipeDTO dto){
@@ -74,15 +71,15 @@ public class RecipeService {
             this.recipeDAO.update(toUpdateRecipe);
             return new RespUpdateRecipeDTO(toUpdateRecipe.getTitle(),toUpdateRecipe.getId());
         }
-
     }
-  /*  public void deleteRecipeById(long id){
-        if (recipeRepository.findById(id).isEmpty())
-            throw new IllegalArgumentException("Recipe with this ID doesnt exists");
+
+   public RespDeleteRecipeDTO deleteRecipeById(String id){
+        Recipe toDeleteRecipe = recipeDAO.findById(id);
+        if (toDeleteRecipe == null)
+            return null;
         else{
-            recipeRepository.deleteById(id);
+            recipeDAO.deleteById(id);
+            return new RespDeleteRecipeDTO(toDeleteRecipe.getId(),toDeleteRecipe.getTitle());
         }
     }
-    */
-
 }

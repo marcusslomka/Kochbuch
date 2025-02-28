@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/kochbuch/recipe")
 public class RecipeController {
@@ -21,15 +23,21 @@ public class RecipeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.createNewRecipe(dto));
     }
     @PutMapping("/{recipe_id}")
-    public ResponseEntity<RespUpdateRecipeDTO> fillCreatedRecipe(@PathVariable String recipe_id, @RequestBody ReqUpdateRecipeDTO dto){
-        return ResponseEntity.status(HttpStatus.OK).body(recipeService.updateRecipe(recipe_id,dto));
+    public ResponseEntity<RespUpdateRecipeDTO> updateCreatedRecipe(@PathVariable String recipe_id, @RequestBody ReqUpdateRecipeDTO dto){
+        if (recipeService.updateRecipe(recipe_id,dto) == null)
+            return ResponseEntity.notFound().build();
+        else return ResponseEntity.status(HttpStatus.OK).body(recipeService.updateRecipe(recipe_id,dto));
     }
     @GetMapping("/{recipe_id}")
     public ResponseEntity<RespGetRecipeByIdDTO> getRecipeById(@PathVariable String recipe_id){
-       return ResponseEntity.status(HttpStatus.OK).body(recipeService.getRecipeByID(recipe_id));
+        if (recipeService.getRecipeByID(recipe_id).isEmpty())
+            return ResponseEntity.notFound().build();
+        else return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.getRecipeByID(recipe_id).get());
     }
-//    @DeleteMapping("/recipe_id")
-//    public void deleteRecipeById(@PathVariable long recipe_id){
-//        ResponseEntity.ok(recipeService.deleteRecipeById(recipe_id));
-//    }
+    @DeleteMapping("/recipe_id")
+    public ResponseEntity<RespDeleteRecipeDTO> deleteRecipeById(@PathVariable String recipe_id){ //Not working
+        if (recipeService.deleteRecipeById(recipe_id) == null)
+            return ResponseEntity.notFound().build();
+        else return ResponseEntity.status(HttpStatus.OK).body(recipeService.deleteRecipeById(recipe_id));
+    }
 }
