@@ -62,7 +62,7 @@ public class RecipeService {
     public RespUpdateRecipeDTO updateRecipe(String id, ReqUpdateRecipeDTO dto){
         Optional<Recipe> optionalRecipe = Optional.ofNullable(recipeDAO.findById(id));
         if (optionalRecipe.isEmpty())
-            throw new IllegalArgumentException("No Recipe with this ID found");
+            return null;
         else {
             Recipe toUpdateRecipe = optionalRecipe.get();
             toUpdateRecipe.setTitle(dto.title());

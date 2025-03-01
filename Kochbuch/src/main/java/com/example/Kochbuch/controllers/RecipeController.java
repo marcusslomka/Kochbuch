@@ -14,9 +14,9 @@ import java.util.Optional;
 @RequestMapping("/api/v1/kochbuch/recipe")
 public class RecipeController {
     RecipeService recipeService;
-
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
+
     }
     @PostMapping
     public ResponseEntity<RespCreateNewRecipeDTO> createNewRecipe(@RequestBody @Validated ReqCreateNewRecipeDTO dto){
