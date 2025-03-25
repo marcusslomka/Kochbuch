@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 
 
 public class Ingredient {
-    private long id;
+    private String id;
     @NotBlank
 
     private String name;
-    private CategorieIngredients category;
+    private String category;
 
 
     public @NotBlank String getName() {
@@ -21,11 +21,14 @@ public class Ingredient {
         this.name = name;
     }
 
-    public CategorieIngredients getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(CategorieIngredients category) {
+    public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getId(){ return this.id;};
+    public void setID(@NotBlank String id){this.id = id;}
 }
