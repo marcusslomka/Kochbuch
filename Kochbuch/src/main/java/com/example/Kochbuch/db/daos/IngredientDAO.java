@@ -1,4 +1,4 @@
-package com.example.Kochbuch.db;
+package com.example.Kochbuch.db.daos;
 
 import com.example.Kochbuch.db.mapper.IngredientMapper;
 import com.example.Kochbuch.entities.Ingredient;
@@ -48,4 +48,3 @@ public class IngredientDAO {
                 " DELETE ingredients WHERE id = ?", id);
     }
 }
-

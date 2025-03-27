@@ -1,27 +1,22 @@
 package com.example.Kochbuch.entities;
 
-import com.example.Kochbuch.enums.QuantityUnit;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
-public class RecipeIngredients {
+public class RecipeIngredient {
 
     private String id;
-
-
-    //um infinity Loop zu umgehen!!
     private Recipe recipe;
-
-
     private Ingredient ingredient;
 
     @NotNull
     private int amount;
 
-    private QuantityUnit quantityUnit;
+    private String quantityUnit;
+
+    public void setId(String id){ this.id = id;}
+
+    public String getId(){return this.id;}
 
     public Recipe getRecipe() {
         return recipe;
@@ -39,7 +34,6 @@ public class RecipeIngredients {
         this.ingredient = ingredient;
     }
 
-    @NotNull
     public int getAmount() {
         return amount;
     }
@@ -48,11 +42,11 @@ public class RecipeIngredients {
         this.amount = amount;
     }
 
-    public  QuantityUnit getQuantityUnit() {
+    public  String getQuantityUnit() {
         return quantityUnit;
     }
 
-    public void setQuantityUnit( QuantityUnit quantityUnit) {
+    public void setQuantityUnit( String quantityUnit) {
         this.quantityUnit = quantityUnit;
     }
 }

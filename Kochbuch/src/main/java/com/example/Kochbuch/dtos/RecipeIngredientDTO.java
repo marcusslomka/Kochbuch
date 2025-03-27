@@ -7,9 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 public record RecipeIngredientDTO(
         @NotBlank
         String name,
-        CategorieIngredients categorie,
+        String categorie,
         @NotBlank
         int amount,
-        QuantityUnit quantityUnit
+        String quantityUnit
 ) {
 }

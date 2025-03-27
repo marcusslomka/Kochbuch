@@ -1,20 +1,24 @@
 package com.example.Kochbuch.services;
 
+import com.example.Kochbuch.db.daos.IngredientDAO;
 import com.example.Kochbuch.dtos.*;
+import com.example.Kochbuch.entities.Ingredient;
 import com.example.Kochbuch.entities.Recipe;
-import com.example.Kochbuch.db.RecipeDAO;
+import com.example.Kochbuch.db.daos.RecipeDAO;
+import com.example.Kochbuch.entities.RecipeIngredient;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RecipeService {
     RecipeDAO recipeDAO;
+    IngredientDAO ingredientDAO;
 
-    public RecipeService(RecipeDAO recipeDAO) {
+    public RecipeService(RecipeDAO recipeDAO,IngredientDAO ingredientDAO) {
         this.recipeDAO = recipeDAO;
+        this.ingredientDAO =  ingredientDAO;
 
     }
 
@@ -23,18 +27,18 @@ public class RecipeService {
         recipe.setTitle(dto.title());
         recipe.setDescription(dto.description());
         //Zutaten durchgehen und zuordnen
-        /* List<RecipeIngredients> recipeIngredients = dto.ingredients().stream()
+         List<RecipeIngredient> recipeIngredients = dto.ingredients().stream()
                 .map(RecipeIngredientsDTO ->{
-                    Ingredient ingredient = Optional.ofNullable(null)
+                    Ingredient ingredient = (Ingredient) Optional.ofNullable(null)
                             .orElseGet(()->{
                                 //Neue Zutat anlegen, falls noch nciht vorhanden
                                 Ingredient newIngredient = new Ingredient();
                                 newIngredient.setCategory(RecipeIngredientsDTO.categorie());
                                 newIngredient.setName(RecipeIngredientsDTO.name());
-                                ingredientRepository.save(newIngredient);
+                                this.ingredientDAO.save(newIngredient);
                                 return newIngredient;
-                                    });
-                    RecipeIngredients recipeIngredient = new RecipeIngredients();
+                            });
+                    RecipeIngredient recipeIngredient = new RecipeIngredient();
                     recipeIngredient.setIngredient(ingredient);
                     recipeIngredient.setAmount(RecipeIngredientsDTO.amount());
                     recipeIngredient.setQuantityUnit(RecipeIngredientsDTO.quantityUnit());
@@ -42,10 +46,7 @@ public class RecipeService {
                     recipeIngredient.setRecipe(recipe);
                     return recipeIngredient;
                 }).toList();
-        */
         //Liste an Rezeptzutaten dem Rezept noch zuornden
-        recipe.setIngredients(List.of());
-
         recipe.setId(this.recipeDAO.save(recipe));
         return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }

@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 public class Ingredient {
     private String id;
     @NotBlank
-
     private String name;
+    @NotBlank
     private String category;
 
 

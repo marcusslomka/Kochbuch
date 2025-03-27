@@ -1,45 +1,45 @@
-package com.example.Kochbuch.db;
+package com.example.Kochbuch.db.daos;
 
+
+import com.example.Kochbuch.db.mapper.Recipe_IngredientMapper;
 import com.example.Kochbuch.entities.Recipe;
-import com.example.Kochbuch.db.mapper.RecipeMapper;
-import com.example.Kochbuch.repositories.RecipeRepository;
+import com.example.Kochbuch.entities.RecipeIngredient;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RecipeDAO {
+public class Recipe_IngredientDAO {
     JdbcTemplate jdbcTemplate;
 
-    public RecipeDAO(JdbcTemplate jdbcTemplate) {
+    public Recipe_IngredientDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String save(Recipe recipe) {
-        String id = recipe.getId();
+    public String save(RecipeIngredient recipeIngredient) {
+        String id = recipeIngredient.getId();
         if (id == null) {
             id = UUID.randomUUID().toString();
         }
         jdbcTemplate.update(
                 """
-                        INSERT INTO recipes
-                        VALUES (?,?,?)
-                        """, id, recipe.getTitle(), recipe.getDescription());
+                        INSERT INTO recipe_ingredients
+                        VALUES (?,?,?,?,?)
+                        """, id, recipeIngredient.getRecipe(), recipeIngredient.getIngredient(), recipeIngredient.getAmount(), recipeIngredient.getQuantityUnit());
         return id;
     }
 
-    public Recipe findById(String id) {
+    public RecipeIngredient findById(String id) {
         try {
-            Recipe recipe = jdbcTemplate.queryForObject(
-                    " SELECT * FROM recipes WHERE ID= ?", new RecipeMapper(), id);
-            return recipe;
+            RecipeIngredient recipeIngredient = jdbcTemplate.queryForObject(
+                    "SELECT * FROM recipe_ingredients WHERE ID= ?", new Recipe_IngredientMapper(),id);
+            return recipeIngredient;
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
     public void update(Recipe recipe) {
         jdbcTemplate.update(
                 """
@@ -48,8 +48,10 @@ public class RecipeDAO {
                         WHERE ID = ?
                         """, recipe.getTitle(), recipe.getDescription(), recipe.getId());
     }
-    public void deleteById (String id){
+        public void deleteById (String id){
             jdbcTemplate.update(
                     " DELETE recipes WHERE id = ?", id);
+        }
     }
 }
+
