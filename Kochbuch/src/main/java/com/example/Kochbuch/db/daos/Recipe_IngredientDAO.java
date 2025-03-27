@@ -40,17 +40,17 @@ public class Recipe_IngredientDAO {
         }
     }
 
-    public void update(Recipe recipe) {
+    public void update(RecipeIngredient recipeIngredient) {
         jdbcTemplate.update(
                 """
-                        UPDATE recipes
-                        SET title = ?, description = ?
+                        UPDATE recipe_ingredients
+                        SET recipe = ?, ingredient = ?, amount = ?, quantityUnit = ?
                         WHERE ID = ?
-                        """, recipe.getTitle(), recipe.getDescription(), recipe.getId());
+                        """, recipeIngredient.getRecipe(),recipeIngredient.getIngredient(),recipeIngredient.getAmount(),recipeIngredient.getQuantityUnit(),recipeIngredient.getId());
     }
         public void deleteById (String id){
             jdbcTemplate.update(
-                    " DELETE recipes WHERE id = ?", id);
+                    " DELETE recipe_ingredient WHERE id = ?", id);
         }
     }
 }
