@@ -2,7 +2,6 @@ package com.example.Kochbuch.db.daos;
 
 
 import com.example.Kochbuch.db.mapper.Recipe_IngredientMapper;
-import com.example.Kochbuch.entities.Recipe;
 import com.example.Kochbuch.entities.RecipeIngredient;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,8 +49,7 @@ public class Recipe_IngredientDAO {
     }
         public void deleteById (String id){
             jdbcTemplate.update(
-                    " DELETE recipe_ingredient WHERE id = ?", id);
+                    " DELETE recipe_ingredients WHERE id = ?", id);
         }
-    }
 }
 

@@ -42,7 +42,6 @@ public class RecipeService {
                     recipeIngredient.setIngredient(ingredient);
                     recipeIngredient.setAmount(RecipeIngredientsDTO.amount());
                     recipeIngredient.setQuantityUnit(RecipeIngredientsDTO.quantityUnit());
-                    //wirft infinityloop, wenns in der Entity nicht mit JasonIgnore gekennzeichnet wird
                     recipeIngredient.setRecipe(recipe);
                     return recipeIngredient;
                 }).toList();
