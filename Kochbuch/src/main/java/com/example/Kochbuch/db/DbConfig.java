@@ -20,11 +20,13 @@ public class DbConfig {
                         );
                         CREATE TABLE IF NOT EXISTS ingredients (
                         id varchar(255) NOT NULL PRIMARY KEY,
-                        name varchar(255) NOT NULL ,
+                        name varchar(255) NOT NULL,
                         categorie varchar(255) NOT NULL
                         );
-                        CREATE TABLE IF NOT EXISTS recipes_ingredients (
+                        CREATE TABLE IF NOT EXISTS recipe_ingredients (
                         id varchar(255) NOT NULL  PRIMARY KEY,
+                        recipe_id varchar(255) NOT NULL,
+                        ingredient_id varchar(255) NOT NULL,
                         amount int NOT NULL,
                         quantityUnit varchar(255) NOT NULL,
                         foreign key (recipe_id) references recipes(id),

@@ -14,17 +14,21 @@ public class IngredientDAO {
 
     public IngredientDAO (JdbcTemplate jdbcTemplate){ this.jdbcTemplate = jdbcTemplate;}
 
-    public String save (Ingredient ingredient){
+    public String generateId(Ingredient ingredient){
         String  id = ingredient.getId();
         if (id == null){
             id = UUID.randomUUID().toString();
         }
+        return id;
+    }
+
+    public String save (Ingredient ingredient){
         jdbcTemplate.update(
                 """
                         INSERT INTO ingredients
                         VALUES (?,?,?)
-                        """, id,ingredient.getName(),ingredient.getCategory());
-                return id;
+                        """,ingredient.getId(),ingredient.getName(),ingredient.getCategory());
+                return ingredient.getId();
     }
     public Ingredient findById(String id){
         try{

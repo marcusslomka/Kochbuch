@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class Recipe_IngredientDAO {
+public class RecipeIngredientDAO {
     JdbcTemplate jdbcTemplate;
 
-    public Recipe_IngredientDAO(JdbcTemplate jdbcTemplate) {
+    public RecipeIngredientDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String save(RecipeIngredient recipeIngredient) {
+    public void save(RecipeIngredient recipeIngredient) {
         String id = recipeIngredient.getId();
         if (id == null) {
             id = UUID.randomUUID().toString();
@@ -25,15 +25,13 @@ public class Recipe_IngredientDAO {
                 """
                         INSERT INTO recipe_ingredients
                         VALUES (?,?,?,?,?)
-                        """, id, recipeIngredient.getRecipe(), recipeIngredient.getIngredient(), recipeIngredient.getAmount(), recipeIngredient.getQuantityUnit());
-        return id;
+                        """, id, recipeIngredient.getRecipe().getId() ,recipeIngredient.getIngredient().getId(),recipeIngredient.getAmount(), recipeIngredient.getQuantityUnit());
     }
 
     public RecipeIngredient findById(String id) {
         try {
-            RecipeIngredient recipeIngredient = jdbcTemplate.queryForObject(
+            return jdbcTemplate.queryForObject(
                     "SELECT * FROM recipe_ingredients WHERE ID= ?", new Recipe_IngredientMapper(),id);
-            return recipeIngredient;
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

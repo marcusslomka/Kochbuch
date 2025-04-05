@@ -1,5 +1,6 @@
 package com.example.Kochbuch.db.daos;
 
+import com.example.Kochbuch.dtos.RecipeIngredientDTO;
 import com.example.Kochbuch.entities.Recipe;
 import com.example.Kochbuch.db.mapper.RecipeMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,17 +17,20 @@ public class RecipeDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String save(Recipe recipe) {
+    public String generateID(Recipe recipe){
         String id = recipe.getId();
         if (id == null) {
             id = UUID.randomUUID().toString();
         }
+        return id;
+    }
+    public String save(Recipe recipe) {
         jdbcTemplate.update(
                 """
                         INSERT INTO recipes
                         VALUES (?,?,?)
-                        """, id, recipe.getTitle(), recipe.getDescription());
-        return id;
+                        """, recipe.getId(), recipe.getTitle(), recipe.getDescription());
+        return recipe.getId();
     }
 
     public Recipe findById(String id) {

@@ -1,6 +1,7 @@
 package com.example.Kochbuch.services;
 
 import com.example.Kochbuch.db.daos.IngredientDAO;
+import com.example.Kochbuch.db.daos.RecipeIngredientDAO;
 import com.example.Kochbuch.dtos.*;
 import com.example.Kochbuch.entities.Ingredient;
 import com.example.Kochbuch.entities.Recipe;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class RecipeService {
     RecipeDAO recipeDAO;
     IngredientDAO ingredientDAO;
+    RecipeIngredientDAO recipeIngredientDAO;
 
-    public RecipeService(RecipeDAO recipeDAO,IngredientDAO ingredientDAO) {
+    public RecipeService(RecipeDAO recipeDAO,IngredientDAO ingredientDAO,RecipeIngredientDAO recipeIngredientDAO) {
         this.recipeDAO = recipeDAO;
         this.ingredientDAO =  ingredientDAO;
+        this.recipeIngredientDAO = recipeIngredientDAO;
 
     }
 
@@ -26,6 +29,7 @@ public class RecipeService {
         Recipe recipe = new Recipe();
         recipe.setTitle(dto.title());
         recipe.setDescription(dto.description());
+        recipe.setId(this.recipeDAO.generateID(recipe));
         //Zutaten durchgehen und zuordnen
          List<RecipeIngredient> recipeIngredients = dto.ingredients().stream()
                 .map(RecipeIngredientsDTO ->{
@@ -33,20 +37,22 @@ public class RecipeService {
                             .orElseGet(()->{
                                 //Neue Zutat anlegen, falls noch nciht vorhanden
                                 Ingredient newIngredient = new Ingredient();
+                                newIngredient.setID(this.ingredientDAO.generateId(newIngredient));
                                 newIngredient.setCategory(RecipeIngredientsDTO.categorie());
                                 newIngredient.setName(RecipeIngredientsDTO.name());
                                 this.ingredientDAO.save(newIngredient);
                                 return newIngredient;
                             });
                     RecipeIngredient recipeIngredient = new RecipeIngredient();
+                    recipeIngredient.setRecipe(recipe);
                     recipeIngredient.setIngredient(ingredient);
                     recipeIngredient.setAmount(RecipeIngredientsDTO.amount());
                     recipeIngredient.setQuantityUnit(RecipeIngredientsDTO.quantityUnit());
-                    recipeIngredient.setRecipe(recipe);
+                    this.recipeIngredientDAO.save(recipeIngredient);
                     return recipeIngredient;
                 }).toList();
         //Liste an Rezeptzutaten dem Rezept noch zuornden
-        recipe.setId(this.recipeDAO.save(recipe));
+        this.recipeDAO.save(recipe);
         return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }
 
