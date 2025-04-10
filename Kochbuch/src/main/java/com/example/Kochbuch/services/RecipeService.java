@@ -30,6 +30,7 @@ public class RecipeService {
         recipe.setTitle(dto.title());
         recipe.setDescription(dto.description());
         recipe.setId(this.recipeDAO.generateID(recipe));
+        this.recipeDAO.save(recipe);
         //Zutaten durchgehen und zuordnen
          List<RecipeIngredient> recipeIngredients = dto.ingredients().stream()
                 .map(RecipeIngredientsDTO ->{
@@ -52,9 +53,14 @@ public class RecipeService {
                     return recipeIngredient;
                 }).toList();
         //Liste an Rezeptzutaten dem Rezept noch zuornden
-        this.recipeDAO.save(recipe);
+        this.recipeDAO.update(recipe);
         return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }
+
+    public Ingredient assignIngredient(List<Ingredient>ingredients){
+
+    }
+
 
     public Optional<RespGetRecipeByIdDTO> getRecipeByID (String id){
         Optional<Recipe> toGetRecipe = Optional.ofNullable(recipeDAO.findById(id));
