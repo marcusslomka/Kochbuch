@@ -25,8 +25,8 @@ public class DbConfig {
                         );
                         CREATE TABLE IF NOT EXISTS recipe_ingredients (
                         id varchar(255) NOT NULL  PRIMARY KEY,
-                        recipe_id varchar(255) NOT NULL,
-                        ingredient_id varchar(255) NOT NULL,
+                        recipe_id varchar(255),
+                        ingredient_id varchar(255),
                         amount int NOT NULL,
                         quantityUnit varchar(255) NOT NULL,
                         foreign key (recipe_id) references recipes(id),
