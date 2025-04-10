@@ -29,6 +29,13 @@ public class Ingredient {
         this.category = category;
     }
 
-    public String getId(){ return this.id;};
-    public void setID(@NotBlank String id){this.id = id;}
+    public String getId() {
+        return this.id;
+    }
+
+    ;
+
+    public void setID(@NotBlank String id) {
+        this.id = id;
+    }
 }

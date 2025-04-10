@@ -9,7 +9,6 @@ import com.example.Kochbuch.db.daos.RecipeDAO;
 import com.example.Kochbuch.entities.RecipeIngredient;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,40 +17,39 @@ public class RecipeService {
     IngredientDAO ingredientDAO;
     RecipeIngredientDAO recipeIngredientDAO;
 
-    public RecipeService(RecipeDAO recipeDAO,IngredientDAO ingredientDAO,RecipeIngredientDAO recipeIngredientDAO) {
+    public RecipeService(RecipeDAO recipeDAO, IngredientDAO ingredientDAO, RecipeIngredientDAO recipeIngredientDAO) {
         this.recipeDAO = recipeDAO;
-        this.ingredientDAO =  ingredientDAO;
+        this.ingredientDAO = ingredientDAO;
         this.recipeIngredientDAO = recipeIngredientDAO;
 
     }
 
-    public RespCreateNewRecipeDTO createNewRecipe(ReqCreateNewRecipeDTO dto){
+    public RespCreateNewRecipeDTO createNewRecipe(ReqCreateNewRecipeDTO dto) {
         //Rezept erstellen + DB eintrag
         Recipe recipe = new Recipe();
         recipe.setTitle(dto.title());
         recipe.setDescription(dto.description());
         recipe.setId(this.recipeDAO.generateID(recipe));
         this.recipeDAO.save(recipe);
-        //Zutaten durchgehen und dem Rezept zuordnen
+        //Zutaten aus dem DTO durchgehen und dem Rezept zuordnen
         assignIngredients(dto, recipe);
         this.recipeDAO.update(recipe);
         return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }
 
-    public void assignIngredients(ReqCreateNewRecipeDTO dto, Recipe recipe){
+    public void assignIngredients(ReqCreateNewRecipeDTO dto, Recipe recipe) {
         dto.ingredients().stream()
-                .map(RecipeIngredientsDTO ->{
+                .map(RecipeIngredientsDTO -> {
                     Ingredient ingredient = (Ingredient) Optional.empty()
-                            .orElseGet(()->{
+                            .orElseGet(() -> {
                                 //Neue Zutat anlegen, falls noch nciht vorhanden
                                 return createNewIngredient(RecipeIngredientsDTO);
-                                });
-                    //RecipeIngredient erstellen
-                    return createNewRecipeIngredient(RecipeIngredientsDTO,recipe,ingredient);
+                            });
+                    return createNewRecipeIngredient(RecipeIngredientsDTO, recipe, ingredient);
                 });
     }
 
-    public Ingredient createNewIngredient(RecipeIngredientDTO dto){
+    public Ingredient createNewIngredient(RecipeIngredientDTO dto) {
         Ingredient newIngredient = new Ingredient();
         newIngredient.setID(this.ingredientDAO.generateId(newIngredient));
         newIngredient.setCategory(dto.categorie());
@@ -60,7 +58,7 @@ public class RecipeService {
         return newIngredient;
     }
 
-    public RecipeIngredient createNewRecipeIngredient(RecipeIngredientDTO dto, Recipe recipe, Ingredient ingredient){
+    public RecipeIngredient createNewRecipeIngredient(RecipeIngredientDTO dto, Recipe recipe, Ingredient ingredient) {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setRecipe(recipe);
         recipeIngredient.setIngredient(ingredient);
@@ -70,7 +68,7 @@ public class RecipeService {
         return recipeIngredient;
     }
 
-    public Optional<RespGetRecipeByIdDTO> getRecipeByID (String id){
+    public Optional<RespGetRecipeByIdDTO> getRecipeByID(String id) {
         Optional<Recipe> toGetRecipe = Optional.ofNullable(recipeDAO.findById(id));
         return toGetRecipe.map(recipe -> new RespGetRecipeByIdDTO(
                 recipe.getId(),
@@ -79,7 +77,7 @@ public class RecipeService {
                 recipe.getIngredients()));
     }
 
-    public RespUpdateRecipeDTO updateRecipe(String id, ReqUpdateRecipeDTO dto){
+    public RespUpdateRecipeDTO updateRecipe(String id, ReqUpdateRecipeDTO dto) {
         Optional<Recipe> optionalRecipe = Optional.ofNullable(recipeDAO.findById(id));
         if (optionalRecipe.isEmpty())
             return null;
@@ -89,17 +87,17 @@ public class RecipeService {
             toUpdateRecipe.setDescription(dto.description());
             toUpdateRecipe.setIngredients(dto.ingredients());
             this.recipeDAO.update(toUpdateRecipe);
-            return new RespUpdateRecipeDTO(toUpdateRecipe.getTitle(),toUpdateRecipe.getId());
+            return new RespUpdateRecipeDTO(toUpdateRecipe.getTitle(), toUpdateRecipe.getId());
         }
     }
 
-   public RespDeleteRecipeDTO deleteRecipeById(String id){
+    public RespDeleteRecipeDTO deleteRecipeById(String id) {
         Recipe toDeleteRecipe = recipeDAO.findById(id);
         if (toDeleteRecipe == null)
             return null;
-        else{
+        else {
             recipeDAO.deleteById(id);
-            return new RespDeleteRecipeDTO(toDeleteRecipe.getId(),toDeleteRecipe.getTitle());
+            return new RespDeleteRecipeDTO(toDeleteRecipe.getId(), toDeleteRecipe.getTitle());
         }
     }
 }

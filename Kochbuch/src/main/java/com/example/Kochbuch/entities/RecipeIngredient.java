@@ -14,9 +14,13 @@ public class RecipeIngredient {
 
     private String quantityUnit;
 
-    public void setId(String id){ this.id = id;}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getId(){return this.id;}
+    public String getId() {
+        return this.id;
+    }
 
     public Recipe getRecipe() {
         return recipe;
@@ -42,11 +46,11 @@ public class RecipeIngredient {
         this.amount = amount;
     }
 
-    public  String getQuantityUnit() {
+    public String getQuantityUnit() {
         return quantityUnit;
     }
 
-    public void setQuantityUnit( String quantityUnit) {
+    public void setQuantityUnit(String quantityUnit) {
         this.quantityUnit = quantityUnit;
     }
 }

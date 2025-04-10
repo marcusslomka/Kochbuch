@@ -12,33 +12,37 @@ import java.util.UUID;
 public class IngredientDAO {
     JdbcTemplate jdbcTemplate;
 
-    public IngredientDAO (JdbcTemplate jdbcTemplate){ this.jdbcTemplate = jdbcTemplate;}
+    public IngredientDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    public String generateId(Ingredient ingredient){
-        String  id = ingredient.getId();
-        if (id == null){
+    public String generateId(Ingredient ingredient) {
+        String id = ingredient.getId();
+        if (id == null) {
             id = UUID.randomUUID().toString();
         }
         return id;
     }
 
-    public String save (Ingredient ingredient){
+    public String save(Ingredient ingredient) {
         jdbcTemplate.update(
                 """
                         INSERT INTO ingredients
                         VALUES (?,?,?)
-                        """,ingredient.getId(),ingredient.getName(),ingredient.getCategory());
-                return ingredient.getId();
+                        """, ingredient.getId(), ingredient.getName(), ingredient.getCategory());
+        return ingredient.getId();
     }
-    public Ingredient findById(String id){
-        try{
+
+    public Ingredient findById(String id) {
+        try {
             Ingredient ingredient = jdbcTemplate.queryForObject(
-                    "SELECT * FROM ingredients WHERE ID = ?", new IngredientMapper(),id);
+                    "SELECT * FROM ingredients WHERE ID = ?", new IngredientMapper(), id);
             return ingredient;
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
     public void update(Ingredient ingredient) {
         jdbcTemplate.update(
                 """
@@ -47,7 +51,8 @@ public class IngredientDAO {
                         WHERE ID = ?
                         """, ingredient.getName(), ingredient.getCategory(), ingredient.getId());
     }
-    public void deleteById (String id){
+
+    public void deleteById(String id) {
         jdbcTemplate.update(
                 " DELETE ingredients WHERE id = ?", id);
     }

@@ -6,6 +6,7 @@ import com.example.Kochbuch.entities.RecipeIngredient;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
 @Component
@@ -25,13 +26,13 @@ public class RecipeIngredientDAO {
                 """
                         INSERT INTO recipe_ingredients
                         VALUES (?,?,?,?,?)
-                        """, id, recipeIngredient.getRecipe().getId() ,recipeIngredient.getIngredient().getId(),recipeIngredient.getAmount(), recipeIngredient.getQuantityUnit());
+                        """, id, recipeIngredient.getRecipe().getId(), recipeIngredient.getIngredient().getId(), recipeIngredient.getAmount(), recipeIngredient.getQuantityUnit());
     }
 
     public RecipeIngredient findById(String id) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM recipe_ingredients WHERE ID= ?", new Recipe_IngredientMapper(),id);
+                    "SELECT * FROM recipe_ingredients WHERE ID= ?", new Recipe_IngredientMapper(), id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -43,11 +44,12 @@ public class RecipeIngredientDAO {
                         UPDATE recipe_ingredients
                         SET recipe = ?, ingredient = ?, amount = ?, quantityUnit = ?
                         WHERE ID = ?
-                        """, recipeIngredient.getRecipe(),recipeIngredient.getIngredient(),recipeIngredient.getAmount(),recipeIngredient.getQuantityUnit(),recipeIngredient.getId());
+                        """, recipeIngredient.getRecipe(), recipeIngredient.getIngredient(), recipeIngredient.getAmount(), recipeIngredient.getQuantityUnit(), recipeIngredient.getId());
     }
-        public void deleteById (String id){
-            jdbcTemplate.update(
-                    " DELETE recipe_ingredients WHERE id = ?", id);
-        }
+
+    public void deleteById(String id) {
+        jdbcTemplate.update(
+                " DELETE recipe_ingredients WHERE id = ?", id);
+    }
 }
 

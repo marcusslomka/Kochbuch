@@ -17,13 +17,14 @@ public class RecipeDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String generateID(Recipe recipe){
+    public String generateID(Recipe recipe) {
         String id = recipe.getId();
         if (id == null) {
             id = UUID.randomUUID().toString();
         }
         return id;
     }
+
     public String save(Recipe recipe) {
         jdbcTemplate.update(
                 """
@@ -42,6 +43,7 @@ public class RecipeDAO {
             return null;
         }
     }
+
     public void update(Recipe recipe) {
         jdbcTemplate.update(
                 """
@@ -50,8 +52,9 @@ public class RecipeDAO {
                         WHERE ID = ?
                         """, recipe.getTitle(), recipe.getDescription(), recipe.getId());
     }
-    public void deleteById (String id){
-            jdbcTemplate.update(
-                    " DELETE recipes WHERE id = ?", id);
+
+    public void deleteById(String id) {
+        jdbcTemplate.update(
+                " DELETE recipes WHERE id = ?", id);
     }
 }

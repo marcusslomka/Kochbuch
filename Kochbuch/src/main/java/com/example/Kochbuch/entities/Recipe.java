@@ -28,7 +28,7 @@ public class Recipe {
         return id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public class Recipe {
         this.title = title;
     }
 
-    public  String getDescription() {
+    public String getDescription() {
         return description;
     }
 

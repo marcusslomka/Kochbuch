@@ -3,14 +3,17 @@ package com.example.Kochbuch.db;
 import jakarta.annotation.PostConstruct;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
 @Component
 public class DbConfig {
     JdbcTemplate jdbcTemplate;
-    public DbConfig (JdbcTemplate jdbcTemplate) {
+
+    public DbConfig(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @PostConstruct
-    void test(){
+    void test() {
         jdbcTemplate.execute(
                 """
                         CREATE TABLE IF NOT EXISTS recipes (
