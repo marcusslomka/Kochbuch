@@ -26,41 +26,49 @@ public class RecipeService {
     }
 
     public RespCreateNewRecipeDTO createNewRecipe(ReqCreateNewRecipeDTO dto){
+        //Rezept erstellen + DB eintrag
         Recipe recipe = new Recipe();
         recipe.setTitle(dto.title());
         recipe.setDescription(dto.description());
         recipe.setId(this.recipeDAO.generateID(recipe));
         this.recipeDAO.save(recipe);
-        //Zutaten durchgehen und zuordnen
-         List<RecipeIngredient> recipeIngredients = dto.ingredients().stream()
-                .map(RecipeIngredientsDTO ->{
-                    Ingredient ingredient = (Ingredient) Optional.ofNullable(null)
-                            .orElseGet(()->{
-                                //Neue Zutat anlegen, falls noch nciht vorhanden
-                                Ingredient newIngredient = new Ingredient();
-                                newIngredient.setID(this.ingredientDAO.generateId(newIngredient));
-                                newIngredient.setCategory(RecipeIngredientsDTO.categorie());
-                                newIngredient.setName(RecipeIngredientsDTO.name());
-                                this.ingredientDAO.save(newIngredient);
-                                return newIngredient;
-                            });
-                    RecipeIngredient recipeIngredient = new RecipeIngredient();
-                    recipeIngredient.setRecipe(recipe);
-                    recipeIngredient.setIngredient(ingredient);
-                    recipeIngredient.setAmount(RecipeIngredientsDTO.amount());
-                    recipeIngredient.setQuantityUnit(RecipeIngredientsDTO.quantityUnit());
-                    this.recipeIngredientDAO.save(recipeIngredient);
-                    return recipeIngredient;
-                }).toList();
-        //Liste an Rezeptzutaten dem Rezept noch zuornden
+        //Zutaten durchgehen und dem Rezept zuordnen
+        assignIngredients(dto, recipe);
         this.recipeDAO.update(recipe);
         return new RespCreateNewRecipeDTO(recipe.getTitle(), recipe.getId());
     }
 
-    public Ingredient assignIngredient(List<Ingredient>ingredients){
-
+    public void assignIngredients(ReqCreateNewRecipeDTO dto, Recipe recipe){
+        dto.ingredients().stream()
+                .map(RecipeIngredientsDTO ->{
+                    Ingredient ingredient = (Ingredient) Optional.empty()
+                            .orElseGet(()->{
+                                //Neue Zutat anlegen, falls noch nciht vorhanden
+                                return createNewIngredient(RecipeIngredientsDTO);
+                                });
+                    //RecipeIngredient erstellen
+                    return createNewRecipeIngredient(RecipeIngredientsDTO,recipe,ingredient);
+                });
     }
 
+    public Ingredient createNewIngredient(RecipeIngredientDTO dto){
+        Ingredient newIngredient = new Ingredient();
+        newIngredient.setID(this.ingredientDAO.generateId(newIngredient));
+        newIngredient.setCategory(dto.categorie());
+        newIngredient.setName(dto.name());
+        this.ingredientDAO.save(newIngredient);
+        return newIngredient;
+    }
+
+    public RecipeIngredient createNewRecipeIngredient(RecipeIngredientDTO dto, Recipe recipe, Ingredient ingredient){
+        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        recipeIngredient.setRecipe(recipe);
+        recipeIngredient.setIngredient(ingredient);
+        recipeIngredient.setAmount(dto.amount());
+        recipeIngredient.setQuantityUnit(dto.quantityUnit());
+        this.recipeIngredientDAO.save(recipeIngredient);
+        return recipeIngredient;
+    }
 
     public Optional<RespGetRecipeByIdDTO> getRecipeByID (String id){
         Optional<Recipe> toGetRecipe = Optional.ofNullable(recipeDAO.findById(id));
