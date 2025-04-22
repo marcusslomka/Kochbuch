@@ -38,4 +38,12 @@ class RecipeE2ETest {
         assertThat(recipeByID.getBody()).isEqualTo(new RespGetRecipeByIdDTO(response.getBody().id(),"Pizza","Ist lecker",List.of()));
     }
 
+    @Test
+    @DisplayName("Recipe Updated Sucessfully")
+    public void recipeUpdatedSucessfully(){
+        var client = RestClient.create("http://localhost:" + port + "/api/v1/kochbuch/recipe");
+        var recipe = new ReqCreateNewRecipeDTO("neue Pizza ist besser", "Ist besser", List.of());
+
+    }
+
 }
