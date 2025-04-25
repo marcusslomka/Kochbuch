@@ -39,7 +39,7 @@ class RecipeE2ETest {
     }
 
     @Test
-    @DisplayName("Recipe Updated Sucessfully")
+    @DisplayName("Recipe Updated Successfully")
     public void recipeUpdatedSucessfully(){
         var client = RestClient.create("http://localhost:" + port + "/api/v1/kochbuch/recipe");
         var recipe = new ReqCreateNewRecipeDTO("neue Pizza ist besser", "Ist besser", List.of());
