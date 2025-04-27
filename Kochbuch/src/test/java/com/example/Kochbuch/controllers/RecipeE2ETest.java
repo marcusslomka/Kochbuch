@@ -3,6 +3,7 @@ package com.example.Kochbuch.controllers;
 import com.example.Kochbuch.dtos.ReqCreateNewRecipeDTO;
 import com.example.Kochbuch.dtos.RespCreateNewRecipeDTO;
 import com.example.Kochbuch.dtos.RespGetRecipeByIdDTO;
+import com.example.Kochbuch.dtos.RespUpdateRecipeDTO;
 import com.example.Kochbuch.entities.Recipe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,7 @@ class RecipeE2ETest {
     public void recipeUpdatedSucessfully(){
         var client = RestClient.create("http://localhost:" + port + "/api/v1/kochbuch/recipe");
         var recipe = new ReqCreateNewRecipeDTO("neue Pizza ist besser", "Ist besser", List.of());
+        var response = client.post().body(recipe).retrieve().toEntity(RespUpdateRecipeDTO.class);
 
     }
 
