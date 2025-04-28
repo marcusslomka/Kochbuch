@@ -7,6 +7,47 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
+    <header>
+        <nav>
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Erstellen</a></li>
+          <li><a href="#">Verwalten</a></li>
+        </ul>
+      </nav>
+      <h1>Verwaltungs-Tool</h1>
+    </header>
+    <main>
+        <section class="create">
+            <h2>Neues Element erstellen</h2>
+            <form>
+              <label for="title">Titel:</label>
+              <input type="text" id="title" name="title" />
+      
+              <label for="description">Beschreibung:</label>
+              <textarea id="description" name="description"></textarea>
+      
+              <button type="submit" class="create-btn">Erstellen</button>
+            </form>
+          </section>
+      
+          <section class="manage">
+            <h2>Elemente verwalten</h2>
+            <div class="entry">
+              <span>Beispiel-Eintrag 1</span>
+              <button class="edit-btn">Bearbeiten</button>
+              <button class="delete-btn">Löschen</button>
+            </div>
+            <div class="entry">
+              <span>Beispiel-Eintrag 2</span>
+              <button class="edit-btn">Bearbeiten</button>
+              <button class="delete-btn">Löschen</button>
+            </div>
+          </section>
+    </main>
+    <footer>
+        <p>footer</p>
+    </footer>
     
 </body>
 </html>

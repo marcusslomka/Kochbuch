@@ -1,0 +1,116 @@
+img {
+    max-width: 100%;
+  }
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background-color: #f5f1ea;
+    color: #2c2c2c;
+  }
+  
+  header {
+    background-color: #f7f4ee;
+    padding: 2rem 1rem 1rem;
+    text-align: center;
+  }
+  
+  nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  section {
+    background-color: #fffaf3;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    width: 300px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: #fefefe;
+  }
+  
+  .create-btn {
+    margin-top: 1rem;
+    background-color: #6b4c3b;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .manage .entry {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .edit-btn {
+    background-color: #9cae95;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+  }
+  
+  .delete-btn {
+    background-color: #c9644d;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    background-color: #f7f4ee;
+    margin-top: 2rem;
+  }
